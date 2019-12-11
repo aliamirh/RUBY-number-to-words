@@ -2,7 +2,7 @@
 
 class NumberWords
   def initialize(number_string)
-    @number_string = number_string
+    @number_string = number_string.split('').keep_if { |c| c =~ /[0-9]/ }.join('')
     @number_array = @number_string.split('').reverse().keep_if { |c| c =~ /[0-9]/ }
     @numbers = {
       '9' => ' nine',
@@ -58,6 +58,7 @@ class NumberWords
     end
     if @number_array.length == 0
       @words[0] = (@words[0] == ' ') ? '' : @words[0]
+      File.write("./#{@number_string}.txt", @words)
       return @words
     end
     current_index = @number_array.length - 1
